@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo Divertido</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff758c, #ff7eb3);
+            color: white;
+        }
+        img {
+            width: 300px;
+            display: block;
+            margin: 20px auto;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        img:hover {
+            transform: scale(1.1);
+        }
+        .hidden {
+            display: none;
+        }
+        #mensagemFinal {
+            font-size: 24px;
+            color: yellow;
+            font-weight: bold;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        #inicio {
+            font-size: 28px;
+            font-weight: bold;
+            padding: 15px;
+            background-color: white;
+            color: #ff758c;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        #inicio:hover {
+            background-color: #ff7eb3;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="instrucao">Vou prever o futuro de vcs</h1>
+    <button id="inicio" onclick="comecarJogo()">Começar</button>
+    <img id="personagem" class="hidden" src="luna.jpg" onclick="proximaFase()">
+    <p id="mensagemFinal" class="hidden">Seu futuro é... casar com um feio! 😂</p>
+    <audio id="clickSound" src="click.mp3"></audio>
+    
+    <script>
+        let fase = 0;
+        const instrucoes = [
+            "Clique na Luna", 
+            "Clique na Bia", 
+            "Clique na Lorrane", 
+            "Clique na Amanda"
+        ];
+        const imagens = ["luna.jpg", "bia.jpg", "lorrane.jpg", "amanda.jpg", "final.jpg"];
+        
+        function comecarJogo() {
+            document.getElementById("inicio").classList.add("hidden");
+            document.getElementById("instrucao").innerText = instrucoes[fase];
+            document.getElementById("personagem").classList.remove("hidden");
+        }
+
+        function proximaFase() {
+            document.getElementById("clickSound").play();
+            fase++;
+            if (fase < instrucoes.length) {
+                document.getElementById("instrucao").innerText = instrucoes[fase];
+                document.getElementById("personagem").src = imagens[fase];
+            } else {
+                document.getElementById("instrucao").innerText = "";
+                document.getElementById("personagem").src = imagens[fase];
+                setTimeout(() => {
+                    document.getElementById("personagem").classList.add("hidden");
+                    document.getElementById("mensagemFinal").classList.remove("hidden");
+                }, 2000);
+            }
+        }
+    </script>
+</body>
+</html>
